@@ -1,0 +1,23 @@
+include header
+
+div(class='wrap')
+  div(class='content')
+    header(class='site-header')
+      include site_header
+  
+    div(class='container')
+      div(class='row')
+        .col.col-md-12
+          h2.panel-title #{goods[0].name}
+        .col.col-md-4
+          img.goods-big-image(
+            src="images/"+goods[0].image
+          )
+        .col.col-md-8
+          p #{goods[0].description}
+          span.success Cost: #{goods[0].cost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$& ')} uah
+          button.button-success.add-to-cart.ml-2(
+            data-goods_id=goods[0].id
+          ) To Cart
+    
+    include nav
