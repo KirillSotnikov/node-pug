@@ -1,7 +1,10 @@
 div(class='col col-md-4')
   div(class='card')
-    a(href='goods?id='+val.id)
-      h3(class='card-title text-center') #{val.name}
+    div
+      a(
+        href='goods?id='+val.id 
+        class='card-title text-center h3 ml-2'
+      ) #{val.name}
       img(
         src='images/' + val.image
       )

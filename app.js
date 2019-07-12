@@ -12,6 +12,8 @@ const mysql = require('mysql')
 
 // MODULE CONFIG
 
+app.use(express.json())
+
 let con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -56,7 +58,7 @@ app.get('/cat', function(req, res) {
       }
     )
   })
-
+  
   let goods = new Promise(function(resolve, reject) {
     con.query(
       'SELECT * FROM goods WHERE category='+catId,
@@ -68,7 +70,7 @@ app.get('/cat', function(req, res) {
   })
 
   Promise.all([cat, goods]).then(function(value) {
-    console.log(value[0]);
+    // console.log(value[0]);
     res.render('cat', {
       cat: JSON.parse(JSON.stringify(value[0])),
       goods: JSON.parse(JSON.stringify(value[1]))
@@ -80,5 +82,29 @@ app.get('/goods', function(req, res) {
   con.query('SELECT * FROM goods WHERE id='+req.query.id, function(error, result, fields) {
     if(error) throw error
     res.render('goods', {goods: JSON.parse(JSON.stringify(result))})
+  })
+})
+
+app.post('/get-category-list', function(req, res) {
+  // console.log(req.body)
+  con.query('SELECT * FROM category', function(error, result, fields) {
+    if(error) throw error
+    console.log(result)
+    res.json(result);
+    // res.render('category', {goods: JSON.parse(JSON.stringify(result))})
+  })
+})
+
+app.post('/get-goods-info', function(req, res) {
+  console.log(req.body)
+  con.query('SELECT id, name, cost FROM goods WHERE id IN ('+req.body.key.join(',')+')', function(error, result, fields) {
+    if(error) throw error
+    console.log(result)
+    let goods = []
+    for(let i = 0; i < result.length; i++) {
+      goods[result[i].id] = result[i]
+    }
+    res.json(goods);
+    // res.render('category', {goods: JSON.parse(JSON.stringify(result))})
   })
 })

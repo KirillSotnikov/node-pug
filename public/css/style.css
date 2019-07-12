@@ -4,3 +4,37 @@ img{
 h2{
   color: blue;
 }
+
+/* NAV */
+.site-nav{
+  width: 300px;
+  min-height: 100vh;
+  position: fixed;
+  left: -300px;
+  top: 0;
+  z-index: 99;
+  padding: 10px;
+  transition: all 1s ease-out;
+  color: #fff;
+}
+.close-button-div{
+  text-align: right;
+}
+.show-nav{
+  position: relative;
+  cursor: pointer;
+}
+.category-list{
+  list-style-type: disc;
+}
+.category-list a{
+  color: #424242;
+}
+
+#cart-nav table a{
+  color: #fff;
+}
+.card-plus, .card-minus{
+  cursor: pointer;
+  font-size: 20px;
+}
